@@ -1,0 +1,112 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.8.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "453d943"
+  },
+  "schemaVersion": 19,
+  "id": "Form_066y9a4",
+  "components": [
+    {
+      "label": "Nombre",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_04jpsgu",
+        "columns": null
+      },
+      "id": "Field_1yitc7e",
+      "key": "nombre",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "subtype": "date",
+      "dateLabel": "Fecha de nacimiento",
+      "type": "datetime",
+      "layout": {
+        "row": "Row_0p0963u",
+        "columns": null
+      },
+      "id": "Field_0qimzkt",
+      "key": "fechaNacimiento",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Telefono",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0p0963u",
+        "columns": null
+      },
+      "id": "Field_1maetbn",
+      "key": "telefono",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "correo electronico",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_09h68sq",
+        "columns": null
+      },
+      "id": "Field_05vey7c",
+      "key": "correo",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Edad",
+      "values": [
+        {
+          "label": "Menor de 18 años",
+          "value": "menor18"
+        },
+        {
+          "label": "Mayor de 18 años",
+          "value": "mayor18"
+        }
+      ],
+      "type": "radio",
+      "layout": {
+        "row": "Row_0kg3pls",
+        "columns": null
+      },
+      "id": "Field_0njit3t",
+      "key": "edad",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Escolaridad ",
+      "values": [
+        {
+          "label": "Estudiante",
+          "value": "estudiante"
+        },
+        {
+          "label": "No estudiante",
+          "value": "noEstudiante"
+        }
+      ],
+      "type": "radio",
+      "layout": {
+        "row": "Row_0nddsox",
+        "columns": null
+      },
+      "id": "Field_17ggs1u",
+      "key": "escolaridad",
+      "validate": {
+        "required": true
+      }
+    }
+  ],
+  "type": "default"
+}

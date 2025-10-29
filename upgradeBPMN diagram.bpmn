@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="70f83fd" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.8.0">
+  <bpmn:collaboration id="Collaboration_0q3p1su">
+    <bpmn:participant id="Participant_1976zef" name="Proceso de evaluación  de acceso Upgrade" processRef="Process_0jlxy7n" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_0jlxy7n" name="New BPMN diagram" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_0hmjjnn">
+      <bpmn:lane id="Lane_0nesfuj" name="Analista">
+        <bpmn:flowNodeRef>Activity_0fuzsmk</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0btn0nx</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_196jkze</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1prwvtl</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_0lchnim</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0jmzvog</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_0ja1ycb" name="Usuario">
+        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1cl2e0z</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:extensionElements>
+        <zeebe:formDefinition formId="Form_066y9a4" />
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_0n3zk4t</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="Activity_0fuzsmk" name="Se coteja la información y se complementa">
+      <bpmn:extensionElements>
+        <zeebe:userTask />
+        <zeebe:formDefinition formId="Form_6dxru96" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0n3zk4t</bpmn:incoming>
+      <bpmn:outgoing>Flow_13p2wqn</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:businessRuleTask id="Activity_0btn0nx" name="Evaluar Upgrade">
+      <bpmn:extensionElements>
+        <zeebe:calledDecision decisionId="decision-1dz3dr7" resultVariable="resultadoevaluacionupgrade" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_13p2wqn</bpmn:incoming>
+      <bpmn:outgoing>Flow_0satcgv</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:sequenceFlow id="Flow_0n3zk4t" sourceRef="StartEvent_1" targetRef="Activity_0fuzsmk" />
+    <bpmn:sequenceFlow id="Flow_13p2wqn" sourceRef="Activity_0fuzsmk" targetRef="Activity_0btn0nx" />
+    <bpmn:exclusiveGateway id="Gateway_196jkze">
+      <bpmn:incoming>Flow_0satcgv</bpmn:incoming>
+      <bpmn:outgoing>Flow_0wyaba8</bpmn:outgoing>
+      <bpmn:outgoing>Flow_11s0kju</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0satcgv" sourceRef="Activity_0btn0nx" targetRef="Gateway_196jkze" />
+    <bpmn:sequenceFlow id="Flow_0wyaba8" sourceRef="Gateway_196jkze" targetRef="Activity_1prwvtl">
+      <bpmn:extensionElements>
+        <zeebe:properties>
+          <zeebe:property name="camundaModeler:exampleOutputJson" value="" />
+        </zeebe:properties>
+      </bpmn:extensionElements>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=resultadoevaluacionupgrade=true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="Activity_1prwvtl" name="Notificación al usuario con upgrade" zeebe:modelerTemplate="io.camunda.connectors.SendGrid.v2" zeebe:modelerTemplateVersion="5" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Ik0wLjI4NTcwNiA1LjQwODQ3SDUuNDM4MzdWMTAuNTYxMUgwLjI4NTcwNlY1LjQwODQ3WiIgZmlsbD0id2hpdGUiLz4KICAgIDxwYXRoIGQ9Ik0wLjI4NTcwNiA1LjQwODQ3SDUuNDM4MzdWMTAuNTYxMUgwLjI4NTcwNlY1LjQwODQ3WiIgZmlsbD0iIzk5RTFGNCIvPgogICAgPHBhdGggZD0iTTUuNDM4MzcgMTAuNTYxMUwxMC41NjExIDEwLjU2MTZWMTUuNjg0NEg1LjQzODM3VjEwLjU2MTFaIiBmaWxsPSJ3aGl0ZSIvPgogICAgPHBhdGggZD0iTTUuNDM4MzcgMTAuNTYxMUwxMC41NjExIDEwLjU2MTZWMTUuNjg0NEg1LjQzODM3VjEwLjU2MTFaIiBmaWxsPSIjOTlFMUY0Ii8+CiAgICA8cGF0aCBkPSJNMC4yODU3MDYgMTUuNjg0Nkw1LjQzODM3IDE1LjY4NDRWMTUuNzE0M0gwLjI4NTcwNlYxNS42ODQ2Wk0wLjI4NTcwNiAxMC41NjE5SDUuNDM4MzdWMTUuNjg0NEwwLjI4NTcwNiAxNS42ODQ2VjEwLjU2MTlaIiBmaWxsPSIjMUE4MkUyIi8+CiAgICA8cGF0aCBkPSJNNS40MzgzNyAwLjI4NTcwNkgxMC41NjExVjUuNDA4NDdINS40MzgzN1YwLjI4NTcwNlpNMTAuNTYxNiA1LjQzODM3SDE1LjcxNDNWMTAuNTYxMUgxMC41NjE2VjUuNDM4MzdaIiBmaWxsPSIjMDBCM0UzIi8+CiAgICA8cGF0aCBkPSJNNS40MzgzNyAxMC41NjExTDEwLjU2MTEgMTAuNTYxNlY1LjQwODQ3SDUuNDM4MzdWMTAuNTYxMVoiIGZpbGw9IiMwMDlERDkiLz4KICAgIDxwYXRoIGQ9Ik0xMC41NjExIDAuMjg1NzA2SDE1LjcxNDNWNS40MDg0N0gxMC41NjExVjAuMjg1NzA2WiIgZmlsbD0iIzFBODJFMiIvPgogICAgPHBhdGggZD0iTTEwLjU2MTEgNS40MDg0N0gxNS43MTQzVjUuNDM4MzdIMTAuNTYxNkwxMC41NjExIDUuNDA4NDdaIiBmaWxsPSIjMUE4MkUyIi8+Cjwvc3ZnPg==">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendgrid:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="{{secrets.camunda_connector_key2}}" target="apiKey" />
+          <zeebe:input source="Leonora" target="from.name" />
+          <zeebe:input source="leonora22@icloud.com" target="from.email" />
+          <zeebe:input source="nombre" target="to.name" />
+          <zeebe:input source="leonora22@icloud.com" target="to.email" />
+          <zeebe:input source="mail" target="unMappedFieldNotUseInModel.mailType" />
+          <zeebe:input source="resultado evaluacion" target="content.subject" />
+          <zeebe:input source="text/plain" target="content.type" />
+          <zeebe:input source="=&#34;Felicidades &#34; + nombre + &#34; &#34; + &#34; ya tenemos tus resultados de la evaluacion te has hecho acredor al upgrade&#34;  " target="content.value" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="elementTemplateVersion" value="5" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.SendGrid.v2" />
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0wyaba8</bpmn:incoming>
+      <bpmn:outgoing>Flow_000h7e4</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_11s0kju" sourceRef="Gateway_196jkze" targetRef="Activity_0jmzvog">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=resultadoevaluacionupgrade=false</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:exclusiveGateway id="Gateway_0lchnim">
+      <bpmn:incoming>Flow_000h7e4</bpmn:incoming>
+      <bpmn:incoming>Flow_1uq5l0t</bpmn:incoming>
+      <bpmn:outgoing>Flow_0m1bbgb</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_000h7e4" sourceRef="Activity_1prwvtl" targetRef="Gateway_0lchnim" />
+    <bpmn:sequenceFlow id="Flow_1uq5l0t" sourceRef="Activity_0jmzvog" targetRef="Gateway_0lchnim" />
+    <bpmn:endEvent id="Event_1cl2e0z">
+      <bpmn:incoming>Flow_0m1bbgb</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0m1bbgb" sourceRef="Gateway_0lchnim" targetRef="Event_1cl2e0z" />
+    <bpmn:serviceTask id="Activity_0jmzvog" name="Notificación al usuario sin upgrade" zeebe:modelerTemplate="io.camunda.connectors.SendGrid.v2" zeebe:modelerTemplateVersion="5" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Ik0wLjI4NTcwNiA1LjQwODQ3SDUuNDM4MzdWMTAuNTYxMUgwLjI4NTcwNlY1LjQwODQ3WiIgZmlsbD0id2hpdGUiLz4KICAgIDxwYXRoIGQ9Ik0wLjI4NTcwNiA1LjQwODQ3SDUuNDM4MzdWMTAuNTYxMUgwLjI4NTcwNlY1LjQwODQ3WiIgZmlsbD0iIzk5RTFGNCIvPgogICAgPHBhdGggZD0iTTUuNDM4MzcgMTAuNTYxMUwxMC41NjExIDEwLjU2MTZWMTUuNjg0NEg1LjQzODM3VjEwLjU2MTFaIiBmaWxsPSJ3aGl0ZSIvPgogICAgPHBhdGggZD0iTTUuNDM4MzcgMTAuNTYxMUwxMC41NjExIDEwLjU2MTZWMTUuNjg0NEg1LjQzODM3VjEwLjU2MTFaIiBmaWxsPSIjOTlFMUY0Ii8+CiAgICA8cGF0aCBkPSJNMC4yODU3MDYgMTUuNjg0Nkw1LjQzODM3IDE1LjY4NDRWMTUuNzE0M0gwLjI4NTcwNlYxNS42ODQ2Wk0wLjI4NTcwNiAxMC41NjE5SDUuNDM4MzdWMTUuNjg0NEwwLjI4NTcwNiAxNS42ODQ2VjEwLjU2MTlaIiBmaWxsPSIjMUE4MkUyIi8+CiAgICA8cGF0aCBkPSJNNS40MzgzNyAwLjI4NTcwNkgxMC41NjExVjUuNDA4NDdINS40MzgzN1YwLjI4NTcwNlpNMTAuNTYxNiA1LjQzODM3SDE1LjcxNDNWMTAuNTYxMUgxMC41NjE2VjUuNDM4MzdaIiBmaWxsPSIjMDBCM0UzIi8+CiAgICA8cGF0aCBkPSJNNS40MzgzNyAxMC41NjExTDEwLjU2MTEgMTAuNTYxNlY1LjQwODQ3SDUuNDM4MzdWMTAuNTYxMVoiIGZpbGw9IiMwMDlERDkiLz4KICAgIDxwYXRoIGQ9Ik0xMC41NjExIDAuMjg1NzA2SDE1LjcxNDNWNS40MDg0N0gxMC41NjExVjAuMjg1NzA2WiIgZmlsbD0iIzFBODJFMiIvPgogICAgPHBhdGggZD0iTTEwLjU2MTEgNS40MDg0N0gxNS43MTQzVjUuNDM4MzdIMTAuNTYxNkwxMC41NjExIDUuNDA4NDdaIiBmaWxsPSIjMUE4MkUyIi8+Cjwvc3ZnPg==">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendgrid:1" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="{{secrets.camunda_connector_key2}}" target="apiKey" />
+          <zeebe:input source="Leonora" target="from.name" />
+          <zeebe:input source="leonora22@icloud.com" target="from.email" />
+          <zeebe:input source="nombre" target="to.name" />
+          <zeebe:input source="leonora22@icloud.com" target="to.email" />
+          <zeebe:input source="mail" target="unMappedFieldNotUseInModel.mailType" />
+          <zeebe:input source="Resultado de upgrade" target="content.subject" />
+          <zeebe:input source="text/plain" target="content.type" />
+          <zeebe:input source="=&#34;Hola!!&#34; + nombre + &#34; &#34; + &#34; ya tenemos tus resultados de la evaluacion lamentablemente no fuiste acredor al upgrade&#34;  " target="content.value" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="elementTemplateVersion" value="5" />
+          <zeebe:header key="elementTemplateId" value="io.camunda.connectors.SendGrid.v2" />
+          <zeebe:header key="retryBackoff" value="PT0S" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_11s0kju</bpmn:incoming>
+      <bpmn:outgoing>Flow_1uq5l0t</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0q3p1su">
+      <bpmndi:BPMNShape id="Participant_1976zef_di" bpmnElement="Participant_1976zef" isHorizontal="true">
+        <dc:Bounds x="186" y="-35" width="1224" height="515" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0ja1ycb_di" bpmnElement="Lane_0ja1ycb" isHorizontal="true">
+        <dc:Bounds x="216" y="-35" width="1194" height="230" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0nesfuj_di" bpmnElement="Lane_0nesfuj" isHorizontal="true">
+        <dc:Bounds x="216" y="195" width="1194" height="285" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="336" y="67" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1e39ln5_di" bpmnElement="Activity_0fuzsmk">
+        <dc:Bounds x="304" y="225" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1utoq0a_di" bpmnElement="Activity_0btn0nx">
+        <dc:Bounds x="544" y="225" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_196jkze_di" bpmnElement="Gateway_196jkze" isMarkerVisible="true">
+        <dc:Bounds x="785" y="240" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0tgn4xb_di" bpmnElement="Activity_1prwvtl">
+        <dc:Bounds x="980" y="225" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0lchnim_di" bpmnElement="Gateway_0lchnim" isMarkerVisible="true">
+        <dc:Bounds x="1225" y="240" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1cl2e0z_di" bpmnElement="Event_1cl2e0z">
+        <dc:Bounds x="1232" y="82" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0iktp9d_di" bpmnElement="Activity_0jmzvog">
+        <dc:Bounds x="980" y="340" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0n3zk4t_di" bpmnElement="Flow_0n3zk4t">
+        <di:waypoint x="354" y="103" />
+        <di:waypoint x="354" y="225" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13p2wqn_di" bpmnElement="Flow_13p2wqn">
+        <di:waypoint x="404" y="265" />
+        <di:waypoint x="544" y="265" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0satcgv_di" bpmnElement="Flow_0satcgv">
+        <di:waypoint x="644" y="265" />
+        <di:waypoint x="785" y="265" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wyaba8_di" bpmnElement="Flow_0wyaba8">
+        <di:waypoint x="835" y="265" />
+        <di:waypoint x="980" y="265" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11s0kju_di" bpmnElement="Flow_11s0kju">
+        <di:waypoint x="810" y="290" />
+        <di:waypoint x="810" y="380" />
+        <di:waypoint x="980" y="380" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_000h7e4_di" bpmnElement="Flow_000h7e4">
+        <di:waypoint x="1080" y="265" />
+        <di:waypoint x="1225" y="265" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1uq5l0t_di" bpmnElement="Flow_1uq5l0t">
+        <di:waypoint x="1080" y="380" />
+        <di:waypoint x="1250" y="380" />
+        <di:waypoint x="1250" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0m1bbgb_di" bpmnElement="Flow_0m1bbgb">
+        <di:waypoint x="1250" y="240" />
+        <di:waypoint x="1250" y="118" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
